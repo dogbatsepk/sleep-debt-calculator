@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Debt Recovery Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        input { width: 100%; padding: 8px; margin: 10px 0; }
+        button { padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sleep Debt Recovery Calculator</h2>
+        <label for="sleepNeeded">Hours of Sleep Needed Per Night:</label>
+        <input type="number" id="sleepNeeded" value="8" min="1" step="0.1">
+        
+        <label for="sleepGot">Hours of Sleep Actually Got Per Night:</label>
+        <input type="number" id="sleepGot" value="6" min="0" step="0.1">
+        
+        <label for="nights">Number of Nights:</label>
+        <input type="number" id="nights" value="7" min="1">
+        
+        <button onclick="calculateSleepDebt()">Calculate</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateSleepDebt() {
+            let sleepNeeded = parseFloat(document.getElementById("sleepNeeded").value);
+            let sleepGot = parseFloat(document.getElementById("sleepGot").value);
+            let nights = parseInt(document.getElementById("nights").value);
+            
+            if (isNaN(sleepNeeded) || isNaN(sleepGot) || isNaN(nights) || sleepNeeded <= 0 || sleepGot < 0 || nights <= 0) {
+                alert("Please enter valid values.");
+                return;
+            }
+            
+            let sleepDebtPerNight = sleepNeeded - sleepGot;
+            let totalSleepDebt = sleepDebtPerNight * nights;
+            
+            let minRecoverySleep = totalSleepDebt * 1.5;
+            let maxRecoverySleep = totalSleepDebt * 2;
+            
+            document.getElementById("result").innerHTML = `
+                <p><strong>Total Sleep Debt:</strong> ${totalSleepDebt.toFixed(1)} hours</p>
+                <p><strong>Recommended Recovery Sleep:</strong> ${minRecoverySleep.toFixed(1)} - ${maxRecoverySleep.toFixed(1)} hours</p>
+                <p><strong>Suggested Plan:</strong> Try adding an extra 1-2 hours of sleep per night or take naps during the day.</p>
+            `;
+        }
+    </script>
+</body>
+</html>
